@@ -1,0 +1,79 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<style>
+            body {
+                padding: 0;
+                margin: 0;
+                background: black;
+            }
+			#cvs {
+                background: black;
+                border: 1px solid white;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="cvs" width="278" height="199"></div>		
+		<script>
+			var cvs = document.getElementById('cvs'),
+				ctx = cvs.getContext('2d'),
+				height = cvs.height,
+				width = cvs.width;
+		
+			var SamplePoint = function(deltaPos, deltaTime) {
+				this.speed = deltaTime == 0 ? 0 : deltaPos/deltaTime/1624*60*60;
+			};					
+			var getTime = function() {
+				return new Date().getTime()/1000;
+			};
+            var reset = function() {
+                sumTime = 0;
+                sumDistance = 0;
+                cvs.width = width;
+                maxSpeed = 0;
+                bars = [];
+            };
+			var bars = [],
+				previousTime = 0,
+                sumDistance = 0,
+                sumTime = 0,
+                maxSpeed = 0;
+			var push = function(deltaPos) {
+                if( previousTime == 0 ) {
+                    previousTime = getTime();
+                    return "--";
+                }
+                
+                // RANDOM
+                //deltaPos = Math.random()*50;
+                
+                sumDistance += deltaPos;
+				bars = bars.splice(0, 10);
+				
+				console.log(bars);
+				cvs.width = width;
+			
+                var newTime = getTime(),
+                    newPoint = new SamplePoint(deltaPos, newTime-previousTime);
+                sumTime += newTime-previousTime;
+                if( newPoint.speed > maxSpeed ) {
+                    maxSpeed = newPoint.speed;
+                }
+				bars.unshift(newPoint);
+				previousTime = newTime;
+			
+				var points = bars.slice().reverse();				
+				ctx.moveTo(0, height-(points[0].speed/100*height));
+				points.forEach(function(sample, index) {
+					ctx.lineTo((index*width/10), height-(sample.speed/100*height));
+				});
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#fff';
+				ctx.stroke();
+                
+                return Math.round(newPoint.speed);
+			};
+		</script>
+	</body>
+</html>
