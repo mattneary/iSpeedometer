@@ -1,11 +1,3 @@
-//
-//  HelloThereAppDelegate.m
-//  HelloThere
-//
-//  Created by Dan Grigsby on 2/4/09.
-//  Copyright __MyCompanyName__ 2009. All rights reserved.
-//
-
 #import "SpeedAppDelegate.h"
 #import "SpeedViewController.h"
 
