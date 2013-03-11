@@ -27,6 +27,8 @@
 			var getTime = function() {
 				return new Date().getTime()/1000;
 			};
+			
+			// For use by [web stringBYEvaluatingJavascript:];
             var reset = function() {
                 sumTime = 0;
                 sumDistance = 0;
@@ -34,19 +36,20 @@
                 maxSpeed = 0;
                 bars = [];
             };
+            
+            // For access from [web stringBYEvaluatingJavascript:];
 			var bars = [],
 				previousTime = 0,
                 sumDistance = 0,
                 sumTime = 0,
                 maxSpeed = 0;
+			
+			// Used to input new GPS via [web stringBYEvaluatingJavascript:];
 			var push = function(deltaPos) {
                 if( previousTime == 0 ) {
                     previousTime = getTime();
                     return "--";
                 }
-                
-                // RANDOM
-                //deltaPos = Math.random()*50;
                 
                 sumDistance += deltaPos;
 				bars = bars.splice(0, 10);
